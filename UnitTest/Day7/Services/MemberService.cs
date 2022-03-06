@@ -34,9 +34,11 @@ namespace Day7.Services
 
         public List<MembeModel> GetAllPeople()
         {
+            return MemberData.Members.ToList();
+        }
 
-                return MemberData.Members.ToList();
-
+        public MembeModel GetMemberById(int id) {
+            return MemberData.Members.Find(m=>m.id == id);
         }
 
     }

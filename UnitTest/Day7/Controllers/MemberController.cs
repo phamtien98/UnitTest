@@ -12,10 +12,10 @@ namespace Day7.Controllers
             _memberService = memberService;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
-                var item = _memberService.GetAllPeople().ToList();
-                return View(item);
+            var item = _memberService.GetAllPeople().ToList();
+            return View(item);
         }
 
         [HttpGet]
@@ -27,11 +27,7 @@ namespace Day7.Controllers
         [HttpPost]
         public IActionResult CreatePeople(MembeModel member)
         {
-            if (ModelState.IsValid)
-            {
-                _memberService.CreateMember(member);
-            }
-
+            _memberService.CreateMember(member);
             return RedirectToAction("Index");
         }
 
@@ -44,13 +40,10 @@ namespace Day7.Controllers
         [HttpPost]
         public IActionResult UpdatePeople(MembeModel member)
         {
-            if (ModelState.IsValid)
-            {
-                _memberService.EditMember(member);
-                return RedirectToAction("Index");
-            }
 
-            return View(member);
+            _memberService.EditMember(member);
+            return RedirectToAction("Index");
+
         }
 
         public IActionResult DeletePeople(MembeModel member)
@@ -66,6 +59,12 @@ namespace Day7.Controllers
             var item = _memberService.GetAllPeople().Where(m => m.id == id).FirstOrDefault();
             _memberService.DeleteMember(item);
             return RedirectToAction("DeletePeople", item);
+        }
+        [HttpPost]
+        public MembeModel GetMemberById(int id)
+        {
+            return _memberService.GetMemberById(id);
+
         }
     }
 }
